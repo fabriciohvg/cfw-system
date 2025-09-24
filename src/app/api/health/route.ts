@@ -16,9 +16,9 @@ export async function GET() {
         directUrl: !!process.env.DIRECT_URL,
       },
     });
-  } catch (e: any) {
+  } catch (e: unknown) {
     return NextResponse.json(
-      { ok: false, error: String(e?.message ?? e) },
+      { ok: false, error: String(e instanceof Error ? e.message : e) },
       { status: 500 }
     );
   }
