@@ -1,5 +1,5 @@
 import { prisma } from "./db";
-import type { PrismaClient, Prisma } from "@prisma/client";
+import type { Prisma } from "@prisma/client";
 
 // Type alias for better readability
 type PrismaTransaction = Prisma.TransactionClient;

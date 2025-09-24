@@ -105,8 +105,8 @@ export async function PATCH(req: Request) {
     });
 
     return NextResponse.json({ ok: true, data });
-  } catch (e: any) {
-    const msg = String(e?.message ?? e);
+  } catch (e: unknown) {
+    const msg = e instanceof Error ? e.message : String(e);
     if (msg.startsWith("forbidden")) {
       return NextResponse.json({ ok: false, error: msg }, { status: 403 });
     }
