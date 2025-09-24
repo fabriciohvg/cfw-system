@@ -1,11 +1,11 @@
 // /src/app/(auth)/login/page.tsx
 "use client";
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { toast } from "sonner";
 
-export default function LoginPage() {
+function LoginForm() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const params = useSearchParams();
@@ -58,6 +58,27 @@ export default function LoginPage() {
           {loading ? "Entrando..." : "Entrar"}
         </button>
       </form>
+    </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<LoginFallback />}>
+      <LoginForm />
+    </Suspense>
+  );
+}
+
+function LoginFallback() {
+  return (
+    <div className="mx-auto mt-24 max-w-sm">
+      <h1 className="text-2xl font-semibold mb-6">Entrar</h1>
+      <div className="space-y-4">
+        <div className="w-full rounded-md border px-3 py-2 bg-gray-100 animate-pulse h-10"></div>
+        <div className="w-full rounded-md border px-3 py-2 bg-gray-100 animate-pulse h-10"></div>
+        <div className="w-full rounded-md px-3 py-2 bg-gray-300 animate-pulse h-10"></div>
+      </div>
     </div>
   );
 }
