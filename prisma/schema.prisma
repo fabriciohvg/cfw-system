@@ -23,6 +23,7 @@ model Tenant {
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
   memberships UserTenant[]
+  Church      Church[]
 }
 
 model User {
@@ -99,4 +100,29 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Church {
+  id     String @id @db.Uuid // = Tenant.id (1:1)
+  tenant Tenant @relation(fields: [id], references: [id], onDelete: Cascade)
+
+  name         String
+  cnpj         String?   @db.VarChar(20)
+  email        String?
+  phone        String?
+  website      String?
+  addressLine  String?
+  addressExtra String?
+  district     String?
+  city         String?
+  state        String?
+  country      String?
+  postalCode   String?
+  presbytery   String?
+  organizedAt  DateTime?
+  logoUrl      String?
+  notes        String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
